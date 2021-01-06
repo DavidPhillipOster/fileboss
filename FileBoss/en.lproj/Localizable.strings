@@ -1,0 +1,17 @@
+/* 
+  Localizable.strings
+  FileBoss
+
+  Created by david on 10/15/20.
+  Copyright © 2020 david. All rights reserved.
+  Open Source under Apache 2 license. See LICENSE in https://github.com/DavidPhillipOster/fileboss/ .
+*/
+"File Boss" = "File Boss";
+
+"Directions" = "Drag files from the Finder to this app’s icon. Tap to send to iOS apps.";
+
+"No apps for this" = "No apps for this document";
+
+"OK" = "OK";
+
+"Unrecognized type" = "Unrecognized type";
