@@ -45,7 +45,7 @@ It’s really easy to use, you'll see once you try it.
 
 ### Compatibility : 
 
-**File Boss** has been tested and works on iOS 9 through iOS 14.
+**File Boss** has been tested and works on iOS 9 through iOS 14. Has Dark Mode support.
 
 ### Build Instructions
 
