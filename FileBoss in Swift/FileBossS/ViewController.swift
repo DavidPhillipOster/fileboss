@@ -1,25 +1,20 @@
 //
 //  ViewController.swift
-//  FileBossS
 //
 //  Created by david on 1/13/21.
-//
+//  Created by David Phillip Oster on 1/13/21.
+//  Copyright © 2020 David Phillip Oster. All rights reserved.
+// Open Source under Apache 2 license. See LICENSE in https://github.com/DavidPhillipOster/fileboss/ .
 
 import UIKit
-
-extension String {
-  var ns: NSString { self as NSString }
-  var pathExtension: String { ns.pathExtension }
-  func appendingPathComponent(_ s:String) -> String { ns.appendingPathComponent(s) }
-}
 
 class ViewController: UITableViewController, UIDocumentInteractionControllerDelegate {
 
   var files: Array<String> = []
-  var interactionIndex: Int = 0
+  var interactionIndex: Int = -1
   var interactor : UIDocumentInteractionController?
-  lazy var documentsPath: String = {
-    NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true).first!
+  lazy var documentsURL: URL = {
+    FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!
   }()
 
   override func viewDidLoad() {
@@ -66,15 +61,19 @@ class ViewController: UITableViewController, UIDocumentInteractionControllerDele
 	func loadFiles() {
     let fm = FileManager.default
     do {
-      print("\(documentsPath)")
-      let dirFiles = try fm.contentsOfDirectory(atPath: documentsPath)
+      // print("\(documentsURL)") // for debugging
+      let dirFiles = try fm.contentsOfDirectory(at: documentsURL, includingPropertiesForKeys: nil, options: [
+        .skipsSubdirectoryDescendants,
+        .skipsPackageDescendants,
+        .skipsHiddenFiles,
+        .producesRelativePathURLs] )
       var files1: [String] = []
-      for file: String in dirFiles {
+      for file: URL in dirFiles {
         if !file.pathExtension.isEmpty {
-          files1.append(file)
+          files1.append(file.lastPathComponent)
         }
       }
-      files1.sort()
+      files1.sort(){$0.caseInsensitiveCompare($1) == .orderedAscending}
       if files != files1 {
         self.files = files1
         tableView.reloadData()
@@ -84,9 +83,9 @@ class ViewController: UITableViewController, UIDocumentInteractionControllerDele
   }
 
   func deleteFileAtTableIndex(_ row: Int) {
-    let filePath = documentsPath.appendingPathComponent(files[row])
+    let fileURL = documentsURL.appendingPathComponent(files[row])
     do {
-      try FileManager.default.removeItem(atPath: filePath)
+      try FileManager.default.removeItem(at: fileURL)
       files.remove(at: row)
       tableView.deleteRows(at: [IndexPath(row: row, section: 0)], with: .automatic)
     } catch {
@@ -94,14 +93,14 @@ class ViewController: UITableViewController, UIDocumentInteractionControllerDele
   }
 
   func shareFileAtTableIndex(_ row: Int) {
-    let fileURL = URL(fileURLWithPath: documentsPath.appendingPathComponent(files[row]))
+    let fileURL = documentsURL.appendingPathComponent(files[row])
     interactor = UIDocumentInteractionController(url: fileURL)
     if let interactor = interactor {
       interactor.delegate = self
       if let itemRect = tableView.cellForRow(at: IndexPath(row: row, section: 0))?.frame {
         interactionIndex = row
         if !interactor.presentOpenInMenu(from: itemRect, in: tableView, animated: true) {
-          // maybe let the user know that no app on the iPhone likes thid file extension.
+          // maybe let the user know that no app on the iPhone likes this file extension.
         }
       }
     }
@@ -110,7 +109,7 @@ class ViewController: UITableViewController, UIDocumentInteractionControllerDele
 // MARK: -
 
   override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-    return files.count
+    files.count
   }
   
   func configureCell(_ cell: UITableViewCell, index: Int) -> UITableViewCell {
@@ -145,7 +144,7 @@ class ViewController: UITableViewController, UIDocumentInteractionControllerDele
   }
 
   func documentInteractionController(_ controller: UIDocumentInteractionController, didEndSendingToApplication application: String?) {
-    if application != nil && interactionIndex != NSNotFound {
+    if application != nil && interactionIndex != -1 {
       // maybe remove the file on successful transfer to another app.
     }
   }

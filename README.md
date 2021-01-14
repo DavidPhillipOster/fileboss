@@ -71,6 +71,9 @@ V 1.2 - Sort the filenames. The O.S. doesn't do it for me. Refresh contents when
 7/08/2020 - started
 V 1.1 - Add launch screen large icon. Add launch screen support for dark mode.
 
+1/13/2021
+Added FileBoss in Swift - a complete translation of this app to Swift
+
 ### License: 
 
 Apache 2. See the LICENSE file in this repository.

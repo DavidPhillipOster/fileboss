@@ -1,9 +1,9 @@
-//
 //  AppDelegate.swift
-//  FileBossS
 //
 //  Created by david on 1/13/21.
-//
+//  Created by David Phillip Oster on 1/13/21.
+//  Copyright © 2020 David Phillip Oster. All rights reserved.
+// Open Source under Apache 2 license. See LICENSE in https://github.com/DavidPhillipOster/fileboss/ .
 
 import UIKit
 
