@@ -1,0 +1,16 @@
+/* 
+  Localizable.strings
+  FileBossS
+
+  Created by david on 1/13/21.
+  
+*/
+"File Boss" = "File Boss";
+
+"Directions" = "Drag files from the Finder to this app’s icon. Tap to send to iOS apps.";
+
+"No apps for this" = "No apps for this document";
+
+"OK" = "OK";
+
+"Unrecognized type" = "Unrecognized type";
