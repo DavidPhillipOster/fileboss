@@ -23,7 +23,10 @@ class ViewController: UITableViewController, UIDocumentInteractionControllerDele
     tableView.tableHeaderView = constructHeader();
     loadFiles()
     let nc = NotificationCenter.default
-    nc.addObserver(self, selector: #selector(didBecomeActive), name: UIApplication.didBecomeActiveNotification, object: nil)
+    let q = OperationQueue.main
+    nc.addObserver(forName: UIApplication.didBecomeActiveNotification, object: nil, queue: q) { [weak self] _ in
+      self?.loadFiles()
+    }
   }
 
   /// resize the tableview header so all the lines of text are visible.
@@ -49,13 +52,8 @@ class ViewController: UITableViewController, UIDocumentInteractionControllerDele
     textLabel.numberOfLines = 0
     textLabel.text = NSLocalizedString("Directions", comment: "")
     textLabel.textColor = UIColor(red: 0.2, green: 0.4, blue: 0.2, alpha: 1)
-    textLabel.autoresizingMask = [.flexibleWidth, .flexibleHeight, .flexibleTopMargin, .flexibleBottomMargin]
+    textLabel.autoresizingMask = [.flexibleWidth, .flexibleHeight]
     return header
-  }
-
-  @objc
-  func didBecomeActive(_ note : Notification){
-    loadFiles()
   }
   
 	func loadFiles() {
