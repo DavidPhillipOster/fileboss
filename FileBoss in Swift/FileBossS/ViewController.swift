@@ -55,8 +55,8 @@ class ViewController: UITableViewController, UIDocumentInteractionControllerDele
     textLabel.autoresizingMask = [.flexibleWidth, .flexibleHeight]
     return header
   }
-  
-	func loadFiles() {
+
+  func loadFiles() {
     let fm = FileManager.default
     do {
       // print("\(documentsURL)") // for debugging
@@ -109,12 +109,12 @@ class ViewController: UITableViewController, UIDocumentInteractionControllerDele
   override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
     files.count
   }
-  
+
   func configureCell(_ cell: UITableViewCell, index: Int) -> UITableViewCell {
     cell.textLabel?.text = files[index]
     return cell
   }
-  
+
   override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
     if let cell = tableView.dequeueReusableCell(withIdentifier: "a") {
       return configureCell(cell, index: indexPath.row)
