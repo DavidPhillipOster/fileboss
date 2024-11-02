@@ -53,6 +53,9 @@ Set the bundle ID to your bundle ID. Adjust the code signing.
 
 ### Versions
 
+11/01/2024
+Dark mode icon for Sequoia
+
 1/06/2021
 First public source code release.
 
